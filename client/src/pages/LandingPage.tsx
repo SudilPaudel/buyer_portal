@@ -77,10 +77,7 @@ export function LandingPage() {
             transition={{ duration: 0.55, ease: "easeOut", delay: 0.05 }}
             className="relative"
           >
-            <div className="absolute -inset-6 rounded-[2.5rem] from-indigo-500/15 via-transparent to-slate-950/10 blur-2xl" />
-            <div className="relative">
-              <PropertySlider />
-            </div>
+            <PropertySlider />
           </motion.div>
         </div>
       </Container>

@@ -10,9 +10,11 @@ import { Loader } from "../components/common/Loader";
 import { EmptyState } from "../components/common/EmptyState";
 import { PropertyGrid } from "../components/property/PropertyGrid";
 import { useAuth } from "../hooks/useAuth";
+import { useFavorites } from "../hooks/useFavorites";
 
 export function DashboardPage() {
   const { user } = useAuth();
+  const { incrementCount, decrementCount } = useFavorites();
   const [loading, setLoading] = useState(true);
   const [properties, setProperties] = useState<Property[]>([]);
   const [favourites, setFavourites] = useState<Favourite[]>([]);
@@ -23,7 +25,7 @@ export function DashboardPage() {
     async function load() {
       setLoading(true);
       try {
-        const [propsRes, favRes] = await Promise.all([propertyApi.getAll(), favouriteApi.getMine()]);
+        const [propsRes, favRes] = await Promise.all([propertyApi.getAll(), favouriteApi.getMine(1, 1000)]);
         if (!mounted) return;
         setProperties(propsRes.data);
         setFavourites(favRes.data);
@@ -51,12 +53,14 @@ export function DashboardPage() {
         const res = await favouriteApi.remove(propertyId);
         toast.success(res.message ?? "Favourite removed");
         setFavourites((prev) => prev.filter((f) => f.property.id !== propertyId));
+        decrementCount();
       } else {
         const res = await favouriteApi.add({ propertyId });
         toast.success(res.message ?? "Added to favourites");
-        // Refresh minimal: fetch favourites to get addedAt/property shape per API contract
-        const favRes = await favouriteApi.getMine();
+        // Refresh with large limit to get all favorites
+        const favRes = await favouriteApi.getMine(1, 1000);
         setFavourites(favRes.data);
+        incrementCount();
         void res; // keep for typing
       }
     } catch {

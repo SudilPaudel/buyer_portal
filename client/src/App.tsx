@@ -1,14 +1,16 @@
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
 import { AppRouter } from "./routes/AppRouter";
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppRouter />
-        <Toaster
+        <FavoritesProvider>
+          <AppRouter />
+          <Toaster
           position="top-right"
           toastOptions={{
             duration: 3500,
@@ -22,6 +24,7 @@ export default function App() {
             },
           }}
         />
+        </FavoritesProvider>
       </AuthProvider>
     </BrowserRouter>
   );

@@ -9,6 +9,7 @@ import { Loader } from "../components/common/Loader";
 import { EmptyState } from "../components/common/EmptyState";
 import { Button } from "../components/ui/Button";
 import { formatCurrency } from "../utils/formatCurrency";
+import { useFavorites } from "../hooks/useFavorites";
 
 function formatDate(iso: string) {
   const d = new Date(iso);
@@ -18,6 +19,7 @@ function formatDate(iso: string) {
 
 export function FavouritesPage() {
   const navigate = useNavigate();
+  const { decrementCount } = useFavorites();
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<Favourite[]>([]);
   const [pending, setPending] = useState<Set<string>>(new Set());
@@ -53,6 +55,7 @@ export function FavouritesPage() {
     try {
       const res = await favouriteApi.remove(propertyId);
       toast.success(res.message ?? "Removed from favourites");
+      decrementCount();
       // Reload the current page
       const res2 = await favouriteApi.getMine(currentPage, itemsPerPage);
       setItems(res2.data);

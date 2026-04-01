@@ -2,7 +2,7 @@ import axios from "axios";
 import { storage } from "../utils/storage";
 
 export const api = axios.create({
-  baseURL: "http://localhost:9004/api",
+  baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:9004/api",
   headers: {
     "Content-Type": "application/json",
   },

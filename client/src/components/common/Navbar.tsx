@@ -1,9 +1,11 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FiHeart, FiLogOut, FiUser } from "react-icons/fi";
+import { Building2 } from "lucide-react";
 import { cn } from "../../utils/cn";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { useAuth } from "../../hooks/useAuth";
+import { useFavorites } from "../../hooks/useFavorites";
 
 function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
   return (
@@ -23,6 +25,7 @@ function NavItem({ to, children }: { to: string; children: React.ReactNode }) {
 
 export function Navbar() {
   const { status, user, logout } = useAuth();
+  const { count: favouritesCount } = useFavorites();
   const navigate = useNavigate();
 
   return (
@@ -30,7 +33,9 @@ export function Navbar() {
       <Container className="py-3">
         <div className="flex items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-2xl bg-slate-950 shadow-sm" />
+            <div className="h-9 w-9 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-slate-200">
+              <Building2 size={20} className="text-slate-900" />
+            </div>
             <div className="leading-tight">
               <div className="text-sm font-semibold text-slate-900">Real Estate Portal</div>
               <div className="text-xs text-slate-500">Favourites</div>
@@ -51,11 +56,16 @@ export function Navbar() {
             {status === "authenticated" ? (
               <>
                 <button
-                  className="h-10 w-10 grid place-items-center rounded-xl border border-slate-200/60 bg-white shadow-sm hover:bg-slate-50 focus-ring"
+                  className="h-10 w-10 grid place-items-center rounded-xl border border-slate-200/60 bg-white shadow-sm hover:bg-slate-50 focus-ring relative"
                   onClick={() => navigate("/favourites")}
                   aria-label="Favourites"
                 >
-                  <FiHeart className="text-slate-700" />
+                  <FiHeart className={cn("text-slate-700", favouritesCount > 0 && "text-red-500 fill-red-500")} />
+                  {favouritesCount > 0 && (
+                    <span className="absolute -top-2 -right-2 flex items-center justify-center h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full">
+                      {favouritesCount}
+                    </span>
+                  )}
                 </button>
                 <div className="hidden sm:flex items-center gap-2 rounded-xl border border-slate-200/60 bg-white px-3 h-10 shadow-sm">
                   <FiUser className="text-slate-600" />
