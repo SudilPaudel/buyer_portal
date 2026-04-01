@@ -9,18 +9,32 @@ const propertyRepo = AppDataSource.getRepository(Property);
 const userRepo = AppDataSource.getRepository(User);
 
 export class FavouriteService {
-  static async getMyFavourites(userId: string) {
-    const favourites = await favouriteRepo.find({
+  static async getMyFavourites(userId: string, page: number = 1, limit: number = 3) {
+    const skip = (page - 1) * limit;
+
+    const [favourites, total] = await favouriteRepo.findAndCount({
       where: { user: { id: userId } },
       relations: ['property'],
       order: { createdAt: 'DESC' },
+      skip,
+      take: limit,
     });
 
-    return favourites.map((fav) => ({
-      favouriteId: fav.id,
-      property: fav.property,
-      addedAt: fav.createdAt,
-    }));
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data: favourites.map((fav) => ({
+        favouriteId: fav.id,
+        property: fav.property,
+        addedAt: fav.createdAt,
+      })),
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+      },
+    };
   }
 
   static async addFavourite(userId: string, propertyId: string) {

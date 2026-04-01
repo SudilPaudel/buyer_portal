@@ -6,11 +6,15 @@ import { validateFavouriteInput } from '../validators/favourite.validator';
 export class FavouriteController {
   static async getMyFavourites(req: Request, res: Response) {
     const userId = req.user!.id;
-    const favourites = await FavouriteService.getMyFavourites(userId);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 3;
+
+    const result = await FavouriteService.getMyFavourites(userId, page, limit);
 
     res.status(200).json({
       success: true,
-      data: favourites,
+      data: result.data,
+      pagination: result.pagination,
     });
   }
 
