@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+## Auth + Simple Buyer Portal (Favourites) — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Production-style frontend for the take-home assignment:
+**Auth + Simple Buyer Portal (Favourites)**.
 
-Currently, two official plugins are available:
+### Tech stack
+- React + Vite
+- TypeScript
+- Tailwind CSS
+- React Router
+- Axios
+- Context API auth state
+- `react-hot-toast` notifications
+- `framer-motion` restrained animations
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Backend contract (must be running)
+- Base URL: `http://localhost:9004/api`
+- Auth: `Authorization: Bearer <token>`
 
-## React Compiler
+### Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+From the repo root:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd client
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run (dev)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd client
+npm run dev
 ```
+
+Open the Vite URL shown in the terminal.
+
+### Build
+
+```bash
+cd client
+npm run build
+```
+
+### Example user flow
+1. Register
+2. Auto-redirect to Dashboard
+3. Add/remove favourites from the property grid
+4. View your favourites in the Favourites page
+5. Open a property detail page and toggle favourite
+
+### Project structure (client)
+See `src/` for modular API, context, components, layouts, pages, and routes.
