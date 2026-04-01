@@ -120,7 +120,7 @@ export function PropertyDetailPage() {
       </div>
 
       <div className="mt-5 overflow-hidden rounded-3xl border border-slate-200/60 bg-white shadow-xl">
-        <div className="aspect-[16/9] bg-slate-100 flex items-center justify-center">
+        <div className="bg-slate-100 flex items-center justify-center">
           {imageError ? (
             <div className="flex flex-col items-center justify-center">
               <Building2 className="h-16 w-16 text-slate-300" />

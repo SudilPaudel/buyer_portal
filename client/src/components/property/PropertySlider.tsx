@@ -7,6 +7,36 @@ import { Loader } from "../common/Loader";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { ChevronLeft, ChevronRight, Building2 } from "lucide-react";
 
+// Swiper styles
+const swiperStyles = `
+  .swiper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .swiper-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .property-slider {
+    width: 100%;
+  }
+  .swiper-button-next-custom:after,
+  .swiper-button-prev-custom:after {
+    content: '';
+  }
+`;
+
 // Dynamic image array for properties
 const propertyImages = [
   "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=1200",
@@ -55,7 +85,9 @@ export function PropertySlider() {
   if (properties.length === 0) return null;
 
   return (
-    <div className="relative">
+    <>
+      <style>{swiperStyles}</style>
+      <div className="relative">
       <Swiper
         modules={[Autoplay, Navigation]}
         autoplay={{
@@ -127,5 +159,6 @@ export function PropertySlider() {
         <ChevronRight className="w-6 h-6 text-white" />
       </button>
     </div>
+    </>
   );
 }
