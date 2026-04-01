@@ -75,10 +75,11 @@ export function DashboardPage() {
       <div className="rounded-3xl border border-slate-200/60 bg-white shadow-xl p-7 sm:p-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <div className="text-sm text-slate-500">Signed in as</div>
+            <div className="text-sm text-slate-500">Welcome Back,</div>
             <div className="mt-1 text-2xl font-semibold text-slate-900">{user?.name}</div>
             <div className="mt-1 text-sm text-slate-500">
-              Role: <span className="font-medium text-slate-700">{user?.role}</span>
+              {/* make the initial letter capital of role */}
+              Role: <span className="font-medium text-slate-700">{user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "-"}</span>
             </div>
           </div>
           <div className="rounded-2xl border border-slate-200/60 bg-slate-50 px-4 py-3">
