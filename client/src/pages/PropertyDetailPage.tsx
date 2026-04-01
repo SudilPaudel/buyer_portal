@@ -43,7 +43,7 @@ export function PropertyDetailPage() {
       try {
         const [pRes, fRes] = await Promise.all([
           propertyApi.getById(propertyId),
-          favouriteApi.getMine(),
+          favouriteApi.getMine(1, 1000),
         ]);
         if (!mounted) return;
         setProperty(pRes.data);
@@ -78,7 +78,7 @@ export function PropertyDetailPage() {
         toast.success(res.message ?? "Added to favourites");
         incrementCount();
       }
-      const fRes = await favouriteApi.getMine();
+      const fRes = await favouriteApi.getMine(1, 1000);
       setFavourites(fRes.data);
     } catch {
       toast.error("Could not update favourites.");
