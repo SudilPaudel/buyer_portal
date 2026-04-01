@@ -3,6 +3,7 @@ export type Property = {
   title: string;
   location: string;
   price: string;
+  image?: string;
   createdAt?: string;
   updatedAt?: string;
 };

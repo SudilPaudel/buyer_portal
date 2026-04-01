@@ -182,3 +182,20 @@
     border-right-color: var(--border);
   }
 }
+
+/* Property Slider Styles */
+.property-slider {
+  width: 100%;
+}
+
+.property-slider .swiper-slide {
+  height: auto;
+}
+
+.property-slider .swiper-wrapper {
+  transition-timing-function: linear;
+}
+
+.property-slider .swiper-pagination {
+  bottom: 10px;
+}

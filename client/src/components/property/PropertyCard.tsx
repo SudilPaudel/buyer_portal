@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Building2 } from "lucide-react";
 import type { Property } from "../../types/property.types";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { cn } from "../../utils/cn";
 import { FavouriteButton } from "./FavouriteButton";
 
 const placeholderImages = [
-  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1560185127-6ed189bf02c8?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80",
+  "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1454496/pexels-photo-1454496.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1643384/pexels-photo-1643384.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1454496/pexels-photo-1454496.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1643384/pexels-photo-1643384.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1454496/pexels-photo-1454496.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1643384/pexels-photo-1643384.jpeg?auto=compress&cs=tinysrgb&w=600",
 ];
 
 function pickImage(id: string) {
@@ -29,6 +36,7 @@ export function PropertyCard({
   onToggleFavourite: () => void;
   pending?: boolean;
 }) {
+  const [imageError, setImageError] = useState(false);
   const img = pickImage(property.id);
 
   return (
@@ -39,14 +47,20 @@ export function PropertyCard({
       )}
     >
       <Link to={`/properties/${property.id}`} className="block overflow-hidden rounded-t-2xl">
-        <div className="relative bg-slate-100">
-          <img
-            src={img}
-            alt={property.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-          />
+        <div className="relative h-64 bg-slate-100">
+          {!imageError ? (
+            <img
+              src={img}
+              alt={property.title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              loading="lazy"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-slate-200">
+              <Building2 className="h-16 w-16 text-slate-400" />
+            </div>
+          )}
           <div className="absolute inset-0 from-slate-950/20 via-transparent to-transparent" />
         </div>
       </Link>
